@@ -17,6 +17,10 @@ void verif(const char *format, int *i, va_list list)
         my_put_float(va_arg(list, double));
         *i += 1;
     }
+    if (format[*i + 1] == 'L' && format[*i + 2] == 'f') {
+        my_put_long_double(va_arg(list, long double));
+        *i += 1;
+    }
     if (format[*i + 1] == 's')
         my_putstr(va_arg(list, char *));
     if (format[*i + 1] == 'c')
