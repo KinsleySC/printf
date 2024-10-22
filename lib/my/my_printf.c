@@ -1,11 +1,13 @@
 /*
 ** EPITECH PROJECT, 2024
-** mini_printf
+** my_printf
 ** File description:
 ** make_mini_printf
 */
 
-#include "include/my.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include "../../include/my.h"
 
 void verif(const char *format, int i, va_list list)
 {
@@ -20,7 +22,7 @@ void verif(const char *format, int i, va_list list)
     }
 }
 
-int mini_printf(const char *format, ...)
+int my_printf(const char *format, ...)
 {
     va_list list;
     int i = 0;
@@ -29,7 +31,7 @@ int mini_printf(const char *format, ...)
     while (format[i] != '\0') {
         if (format[i] == '%') {
             verif(format, i, list);
-            i+= 1;
+            i += 1;
         } else {
             my_putchar(format[i]);
         }
