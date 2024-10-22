@@ -5,7 +5,7 @@
 ** function
 */
 
-#include <stddef.h>
+#include "../../include/my.h"
 
 int my_str_isalpha(char const *str)
 {

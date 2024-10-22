@@ -5,8 +5,7 @@
 ** function
 */
 
-#include <unistd.h>
-#include "my.h"
+#include "../../include/my.h"
 
 int my_put_nbr(int nb)
 {

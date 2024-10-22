@@ -5,8 +5,7 @@
 ** function
 */
 
-#include <string.h>
-#include "my.h"
+#include "../../include/my.h"
 
 char *my_revstr(char *str)
 {

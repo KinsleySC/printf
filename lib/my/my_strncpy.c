@@ -5,8 +5,7 @@
 ** function
 */
 
-#include <string.h>
-#include <stdio.h>
+#include "../../include/my.h"
 
 char *my_strncpy(char *dest, char const *src, int n)
 {

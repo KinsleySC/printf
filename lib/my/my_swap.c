@@ -5,7 +5,7 @@
 ** function
 */
 
-#include <stdio.h>
+#include "../../include/my.h"
 
 void my_swap(int *a, int *b)
 {

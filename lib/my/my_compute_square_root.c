@@ -5,6 +5,7 @@
 ** function
 */
 
+#include "../../include/my.h"
 
 int my_compute_square_root(int nb)
 {

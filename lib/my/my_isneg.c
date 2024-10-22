@@ -5,7 +5,7 @@
 ** function
 */
 
-#include "my.h"
+#include "../../include/my.h"
 
 int my_isneg(int n)
 {

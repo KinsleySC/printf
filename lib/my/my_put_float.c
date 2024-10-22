@@ -5,7 +5,7 @@
 ** rush2
 */
 
-#include "my.h"
+#include "../../include/my.h"
 
 void my_put_float(double nb)
 {

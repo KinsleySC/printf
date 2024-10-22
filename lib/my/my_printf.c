@@ -5,8 +5,6 @@
 ** make_mini_printf
 */
 
-#include <stdarg.h>
-#include <stdio.h>
 #include "../../include/my.h"
 
 void verif(const char *format, int i, va_list list)

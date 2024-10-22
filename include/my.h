@@ -5,6 +5,16 @@
 ** header
 */
 
+#include <stdarg.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <limits.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stddef.h>
+
 #ifndef MY_HEADER_H
     #define MY_HEADER_H
 
@@ -39,5 +49,6 @@ int my_showstr(char const *str);
 int my_showmem(char const *str, int size);
 char *my_strcat(char *dest, char const *src);
 char *my_strncat(char *dest, char const *src, int nb);
+int mini_printf(const char *format, ...);
 
 #endif

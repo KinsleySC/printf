@@ -5,8 +5,7 @@
 ** function
 */
 
-#include <stdbool.h>
-#include <stddef.h>
+#include "../../include/my.h"
 
 int my_str_isnum(const char *str)
 {

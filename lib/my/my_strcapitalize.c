@@ -5,8 +5,7 @@
 ** function
 */
 
-#include <stdio.h>
-#include <string.h>
+#include "../../include/my.h"
 
 int is_capitalize_position(char *str, int i)
 {

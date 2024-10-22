@@ -5,6 +5,8 @@
 ** function
 */
 
+#include "../../include/my.h"
+
 int my_is_prime(int nb)
 {
     if (nb < 2) {
