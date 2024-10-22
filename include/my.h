@@ -8,16 +8,10 @@
 #ifndef MY_HEADER_H
     #define MY_HEADER_H
 
-typedef struct {
-    const char *word_start;
-    int word_length;
-    int in_word;
-    int index;
-} word_processing_context_t;
-
 void my_putchar(char c);
 int my_isneg(int nb);
 int my_put_nbr(int nb);
+void my_put_float(double nb);
 void my_swap(int *a, int *b);
 int my_putstr(char const *str);
 int my_strlen(char const *str);
