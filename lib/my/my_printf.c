@@ -17,6 +17,10 @@ void verif(const char *format, int *i, va_list list)
         my_putstr(va_arg(list, char *));
     if (format[*i + 1] == 'c')
         my_putchar(va_arg(list, int));
+    if (format[*i + 1] == 'x')
+        my_put_hexa_mini(va_arg(list, int));
+    if (format[*i + 1] == 'X')
+        my_put_hexa(va_arg(list, int));
     if (format[*i + 1] == '%')
         my_putchar('%');
 }

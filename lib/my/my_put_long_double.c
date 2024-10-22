@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Epitech
 ** File description:
-** funcrion
+** function
 */
 
 #include "../../include/my.h"
