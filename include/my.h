@@ -24,6 +24,8 @@ int my_put_nbr(int nb);
 void my_put_float(double nb);
 void my_put_long_double(long double nb);
 void my_put_long_int(long int nb);
+int my_put_hexa(int nbr);
+int my_put_hexa_mini(int nbr);
 void my_swap(int *a, int *b);
 int my_putstr(char const *str);
 int my_strlen(char const *str);

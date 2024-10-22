@@ -7,7 +7,7 @@
 
 #include "../../include/my.h"
 
-int my_put_hexa_mini(int nbr)
+int my_put_hexa_mini(int nb)
 {
     int x = 1;
     int result;
@@ -15,15 +15,15 @@ int my_put_hexa_mini(int nbr)
     char const *base = "0123456789abcdef";
 
     temp = my_strlen(base);
-    if (nbr < 0) {
+    if (nb < 0) {
         my_putchar('-');
-        nbr = -(nbr);
+        nb = -(nb);
     }
-    while ((nbr / x) >= temp) {
+    while ((nb / x) >= temp) {
         x = x * temp;
     }
     while (x > 0) {
-        result = (nbr / x) % temp;
+        result = (nb / x) % temp;
         my_putchar(base[result]);
         x = x / temp;
     }
