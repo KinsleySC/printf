@@ -11,7 +11,7 @@ void verif(const char *format, int *i, va_list list)
 {
     if (format[*i + 1] == 'd' || format[*i + 1] == 'i')
         my_put_nbr(va_arg(list, int));
-    if (format[*i + 1] == 'f')
+    if (format[*i + 1] == 'f' || format[*i + 1] == 'F')
         my_put_float(va_arg(list, double));
     if (format[*i + 1] == 'l' && format[*i + 2] == 'f') {
         my_put_float(va_arg(list, double));
