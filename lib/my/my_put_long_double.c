@@ -7,10 +7,10 @@
 
 #include "../../include/my.h"
 
-void my_put_float(double nb)
+void my_put_long_double(long double nb)
 {
     int integer_part = (int)nb;
-    double fraction_part;
+    long double fraction_part;
     int precision;
     int fractional_part_as_int;
 
