@@ -7,25 +7,21 @@
 
 #include "../../include/my.h"
 
-int my_put_hexa(int nb)
+int my_put_hexa(unsigned long nb)
 {
-    int x = 1;
-    int result;
-    int temp;
+    unsigned long x = 1;
+    unsigned long result;
+    unsigned long temp;
     char const *base = "0123456789ABCDEF";
 
     temp = my_strlen(base);
-    if (nb < 0) {
-        my_putchar('-');
-        nb = -(nb);
-    }
     while ((nb / x) >= temp) {
-        x = x * temp;
+        x *= temp;
     }
     while (x > 0) {
         result = (nb / x) % temp;
         my_putchar(base[result]);
-        x = x / temp;
+        x /= temp;
     }
     return 0;
 }
