@@ -54,5 +54,6 @@ int my_showmem(char const *str, int size);
 char *my_strcat(char *dest, char const *src);
 char *my_strncat(char *dest, char const *src, int nb);
 int mini_printf(const char *format, ...);
+int my_octal(int nb);
 
 #endif
