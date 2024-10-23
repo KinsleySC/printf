@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #ifndef MY_HEADER_H
     #define MY_HEADER_H
@@ -24,8 +25,9 @@ int my_put_nbr(int nb);
 void my_put_float(double nb);
 void my_put_long_double(long double nb);
 void my_put_long_int(long int nb);
-int my_put_hexa(int nbr);
-int my_put_hexa_mini(int nbr);
+int my_put_hexa(unsigned long nb);
+int my_put_hexa_mini(unsigned long nb);
+void my_put_pointer(void *ptr);
 void my_swap(int *a, int *b);
 int my_putstr(char const *str);
 int my_strlen(char const *str);
