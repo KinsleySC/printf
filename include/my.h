@@ -68,5 +68,6 @@ char *my_strncat(char *dest, char const *src, int nb);
 int mini_printf(const char *format, ...);
 int my_octal(int nb);
 int my_printf(const char *format, ...);
+void my_unsigned_int(unsigned int nb);
 
 #endif

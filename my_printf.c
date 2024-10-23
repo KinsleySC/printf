@@ -47,6 +47,8 @@ void verif2(const char *format, int *i, va_list list)
     }
     if (format[*i + 1] == 'E')
         my_put_scientific_cap(va_arg(list, double));
+    if (format[*i + 1] == 'u')
+        my_unsigned_int(va_arg(list, unsigned int));
 }
 
 int my_printf(const char *format, ...)
@@ -67,12 +69,4 @@ int my_printf(const char *format, ...)
     }
     va_end(list);
     return 0;
-}
-
-int main(void)
-{
-    double e = 3542;
-
-    printf("%E\n", e);
-    my_printf("%E\n", e);
 }
