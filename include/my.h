@@ -15,6 +15,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <math.h>
 
 #ifndef MY_HEADER_H
     #define MY_HEADER_H
