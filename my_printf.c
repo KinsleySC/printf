@@ -9,10 +9,6 @@
 
 void verif(const char *format, int *i, va_list list)
 {
-    if (format[*i + 1] == 'd' || format[*i + 1] == 'i')
-        my_put_nbr(va_arg(list, int));
-    if (format[*i + 1] == 'f' || format[*i + 1] == 'F')
-        my_put_float(va_arg(list, double));
     if (format[*i + 1] == 's')
         my_putstr(va_arg(list, char *));
     if (format[*i + 1] == 'c')
@@ -25,32 +21,23 @@ void verif(const char *format, int *i, va_list list)
         my_put_pointer(va_arg(list, void *));
     if (format[*i + 1] == 'o')
         my_octal(va_arg(list, int));
-    if (format[*i + 1] == 'e')
-        my_put_scientific(va_arg(list, double));
+    if (format[*i + 1] == 'u') {
+        my_unsigned_int(va_arg(list, unsigned int));
+    }
     if (format[*i + 1] == '%')
         my_putchar('%');
 }
 
 void verif2(const char *format, int *i, va_list list)
 {
-    if (format[*i + 1] == 'l' && format[*i + 2] == 'f') {
-        my_put_float(va_arg(list, double));
-        *i += 1;
-    }
-    if (format[*i + 1] == 'L' && format[*i + 2] == 'f') {
-        my_put_long_double(va_arg(list, long double));
-        *i += 1;
-    }
-    if (format[*i + 1] == 'l' && format[*i + 2] == 'd') {
-        my_put_long_int(va_arg(list, long int));
-        *i += 1;
-    }
-    if (format[*i + 1] == 'E') {
-        my_put_scientific_cap(va_arg(list, double));
-    }
-    if (format[*i + 1] == 'u') {
-        my_unsigned_int(va_arg(list, unsigned int));
-    }
+    int plus_flag = 0;
+
+    handle_plus_flag(format, i, &plus_flag);
+    handle_int(format, i, plus_flag, list);
+    handle_long_double(format, i, plus_flag, list);
+    handle_long_int(format, i, plus_flag, list);
+    handle_double(format, i, plus_flag, list);
+    handle_scientific(format, i, plus_flag, list);
 }
 
 void verif3_h(const char *format, int *i, va_list list)
@@ -114,26 +101,5 @@ int my_printf(const char *format, ...)
         i++;
     }
     va_end(list);
-    return 0;
-}
-
-int main(void)
-{
-    int t;
-    char l = 'r';
-    char str[8];
-
-    my_printf("Me : %n \n", &t);
-    printf("Origin : %n \n", &t);
-    my_printf("Me with #: %d \n", t);
-    printf("Origin with # : %d \n\n", t);
-    my_printf("Me with zero: %010d \n", 1755);
-    printf("Origin with zero: %010d \n\n", 1755);
-    my_printf("Me pred with blank: %19d \n", 1755);
-    printf("Origin pred with blank: %19d \n\n", 1755);
-    my_printf("Me without #: % \n", &t);
-    printf("Origin without #: % \n", &t);
-    my_printf("Me with #: %#d \n", 5);
-    printf("Origin with #: %#d \n\n", 5);
     return 0;
 }
