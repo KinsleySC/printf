@@ -30,14 +30,24 @@ void verif(const char *format, int *i, va_list list)
 
 void verif2(const char *format, int *i, va_list list)
 {
-    int plus_flag = 0;
-
-    handle_plus_flag(format, i, &plus_flag);
-    handle_int(format, i, plus_flag, list);
-    handle_long_double(format, i, plus_flag, list);
-    handle_long_int(format, i, plus_flag, list);
-    handle_double(format, i, plus_flag, list);
-    handle_scientific(format, i, plus_flag, list);
+    if (format[*i + 1] == 'd' || format[*i + 1] == 'i')
+        my_put_nbr(va_arg(list, int));
+    if (format[*i + 1] == 'l' && format[*i + 2] == 'd') {
+        my_put_long_int(va_arg(list, long int));
+        *i += 1;
+    }
+    if (format[*i + 1] == 'f' || format[*i + 1] == 'F')
+        my_put_float(va_arg(list, double));
+    if (format[*i + 1] == 'L' && format[*i + 2] == 'f') {
+        my_put_long_double(va_arg(list, long double));
+        *i += 1;
+    }
+    if (format[*i + 1] == 'e' || format[*i + 1] == 'E') {
+        if (format[*i + 1] == 'e')
+            my_put_scientific(va_arg(list, double));
+        else
+            my_put_scientific_cap(va_arg(list, double));
+    }
 }
 
 void verif3_h(const char *format, int *i, va_list list)
@@ -59,25 +69,26 @@ void verif3_h(const char *format, int *i, va_list list)
     }
 }
 
-void static verif4(const char *format, int *i, int *char_c, va_list list)
+void static verif4(const char *format, int *i, int *cnb, va_list list)
 {
     int *stock;
 
     if (format[*i + 1] == '#' && format[*i + 2] == 'm') {
         my_putchar('0');
-        *i += 1;
+        *i += 2;
     }
     if (format[*i + 1] == 'm') {
         my_putstr("Success");
+        *i += 1;
     }
     if (format[*i + 1] == 'n') {
         stock = va_arg(list, int *);
-        *char_c = *stock;
+        *stock = *cnb;
     }
-    if (format[*i + 1] == '#') {
-        if (format[*i + 2] == 'd' || format[*i + 2] == 'i') {
-            my_put_nbr(va_arg(list, int));
-        }
+    if (format[*i + 1] == '#' && (format[*i + 2] == 'd'
+    || format[*i + 2] == 'i')) {
+        my_put_nbr(va_arg(list, int));
+        *i += 2;
     }
 }
 
@@ -85,7 +96,7 @@ int my_printf(const char *format, ...)
 {
     va_list list;
     int i = 0;
-    int char_c = 0;
+    int cnb = 0;
 
     va_start(list, format);
     while (format[i] != '\0') {
@@ -93,13 +104,14 @@ int my_printf(const char *format, ...)
             verif(format, &i, list);
             verif2(format, &i, list);
             verif3_h(format, &i, list);
-            verif4(format, &i, &char_c, list);
-            i += 1;
+            verif4(format, &i, &cnb, list);
+            i++;
         } else {
             my_putchar(format[i]);
+            cnb++;
         }
         i++;
     }
     va_end(list);
-    return 0;
+    return cnb;
 }
