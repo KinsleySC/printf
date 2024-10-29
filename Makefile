@@ -19,8 +19,11 @@ $(NAME):	$(OBJ)
 clean:
 	rm -f $(OBJ)
 	rm -f *~
+	rm -f *#
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
+	rm -f *.gcno
+	rm -f *.gcda
 
 re: fclean all

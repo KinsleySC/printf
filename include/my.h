@@ -77,5 +77,6 @@ void handle_long_double(const char *format, int *i, va_list list);
 void handle_long_int(const char *format, int *i, va_list list);
 void handle_float(const char *format, int *i, va_list list);
 void handle_scientific(const char *format, int *i, va_list list);
+void my_space_width(int nb, int value);
 
 #endif

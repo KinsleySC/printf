@@ -92,6 +92,27 @@ void static verif4(const char *format, int *i, int *cnb, va_list list)
     }
 }
 
+void static verif5(const char *format, int *i, int *cnb, va_list list)
+{
+    int len = my_strlen(va_arg(list, char *));
+    int *nbr;
+
+    while (format[*i + 1] >= '0' && format[*i + 1] <= '9') {
+        nbr = (*nbr * 10) + (format[*i + 1] - '0');
+        *nbr = *cnb;
+        if (format[*i + 2] == 's') {
+            my_space_width(*nbr, len);
+            my_putstr(va_arg(list, char *));
+            i += 2;
+        }
+        if (format[*i + 2] == 'd' || format[*i + 2] == 'i') {
+            my_space_width(*nbr, va_arg(list, int));
+            my_put_nbr(va_arg(list, int));
+            i += 2;
+        }
+    }
+}
+
 int my_printf(const char *format, ...)
 {
     va_list list;
