@@ -25,6 +25,10 @@ void verif(const char *format, int *i, va_list list)
         my_unsigned_int(va_arg(list, unsigned int));
     if (format[*i + 1] == '%')
         my_putchar('%');
+    if (format[*i + 1] == 'l' && format[*i + 2] == 'f') {
+        my_put_float(va_arg(list, double));
+        *i += 1;
+    }
 }
 
 void verif2(const char *format, int *i, va_list list)
@@ -129,15 +133,42 @@ void static plus_flag(const char *format, int *i, va_list list)
         my_put_float(va_arg(list, double));
         *i += 1;
     }
+    if (format[*i + 1] == '+' && format[*i + 2] == 'e') {
+        my_putchar('+');
+        my_put_scientific(va_arg(list, double));
+        *i += 1;
+    }
 }
 
-static void group(const char *format, int *i, int *cnb, va_list list)
+void static plus_flag2(const char *format, int *i, va_list list)
+{
+    if (format[*i + 1] == '+' &&
+    format[*i + 2] == 'l' && format[*i + 3] == 'd') {
+        my_putchar('+');
+        my_put_long_int(va_arg(list, long int));
+        *i += 2;
+    }
+    if (format[*i + 1] == '+' &&
+    format[*i + 2] == 'l' && format[*i + 3] == 'f') {
+        my_putchar('+');
+        my_put_float(va_arg(list, double));
+        *i += 2;
+    }
+    if (format[*i + 1] == '+' && format[*i + 2] == 'E') {
+        my_putchar('+');
+        my_put_scientific_cap(va_arg(list, double));
+        *i += 1;
+    }
+}
+
+void static group(const char *format, int *i, int *cnb, va_list list)
 {
     verif(format, i, list);
     verif2(format, i, list);
     verif3_h(format, i, list);
     verif4(format, i, cnb, list);
     plus_flag(format, i, list);
+    plus_flag2(format, i, list);
 }
 
 int my_printf(const char *format, ...)
