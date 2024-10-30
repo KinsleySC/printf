@@ -21,9 +21,8 @@ void verif(const char *format, int *i, va_list list)
         my_put_pointer(va_arg(list, void *));
     if (format[*i + 1] == 'o')
         my_octal(va_arg(list, int));
-    if (format[*i + 1] == 'u') {
+    if (format[*i + 1] == 'u')
         my_unsigned_int(va_arg(list, unsigned int));
-    }
     if (format[*i + 1] == '%')
         my_putchar('%');
 }
@@ -98,7 +97,7 @@ void static verif5(const char *format, int *i, int *cnb, va_list list)
     int *nbr;
 
     while (format[*i + 1] >= '0' && format[*i + 1] <= '9') {
-        nbr = (*nbr * 10) + (format[*i + 1] - '0');
+        *nbr = (*nbr * 10) + (format[*i + 1] - '0');
         *nbr = *cnb;
         if (format[*i + 2] == 's') {
             my_space_width(*nbr, len);
@@ -113,6 +112,34 @@ void static verif5(const char *format, int *i, int *cnb, va_list list)
     }
 }
 
+void static plus_flag(const char *format, int *i, va_list list)
+{
+    if (format[*i + 1] == '+' && format[*i + 2] == 'd') {
+        my_putchar('+');
+        my_put_nbr(va_arg(list, int));
+        *i += 1;
+    }
+    if (format[*i + 1] == '+' && format[*i + 2] == 'i') {
+        my_putchar('+');
+        my_put_nbr(va_arg(list, int));
+        *i += 1;
+    }
+    if (format[*i + 1] == '+' && format[*i + 2] == 'f') {
+        my_putchar('+');
+        my_put_float(va_arg(list, double));
+        *i += 1;
+    }
+}
+
+static void group(const char *format, int *i, int *cnb, va_list list)
+{
+    verif(format, i, list);
+    verif2(format, i, list);
+    verif3_h(format, i, list);
+    verif4(format, i, cnb, list);
+    plus_flag(format, i, list);
+}
+
 int my_printf(const char *format, ...)
 {
     va_list list;
@@ -122,10 +149,7 @@ int my_printf(const char *format, ...)
     va_start(list, format);
     while (format[i] != '\0') {
         if (format[i] == '%') {
-            verif(format, &i, list);
-            verif2(format, &i, list);
-            verif3_h(format, &i, list);
-            verif4(format, &i, &cnb, list);
+            group(format, &i, &cnb, list);
             i++;
         } else {
             my_putchar(format[i]);
