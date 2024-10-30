@@ -191,13 +191,3 @@ int my_printf(const char *format, ...)
     va_end(list);
     return cnb;
 }
-
-int main(void)
-{
-    my_printf("%lf\n", 3.14159);
-    my_put_float(3.14159);
-    printf("\n");
-    printf("%lf\n", 3.14159);
-    my_printf("%+lf\n", 3.14159);
-    my_printf("%f\n", 3.14159);
-}

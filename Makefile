@@ -16,6 +16,8 @@ all: $(NAME)
 
 $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
+
+tests_run:
 	gcc *.c tests/unit_test.c --coverage -lcriterion -o $(NAME2) -L. -lmy
 
 clean:
