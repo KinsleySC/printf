@@ -23,8 +23,8 @@ void verif(const char *format, int *i, va_list list)
         my_octal(va_arg(list, int));
     if (format[*i + 1] == 'u')
         my_unsigned_int(va_arg(list, unsigned int));
-    if (format[*i + 1] == '%')
-        my_putchar('%');
+    if (format[*i + 1] == 'f' || format[*i + 1] == 'F')
+        my_put_float(va_arg(list, double));
     if (format[*i + 1] == 'l' && format[*i + 2] == 'f') {
         my_put_float(va_arg(list, double));
         *i += 1;
@@ -33,14 +33,14 @@ void verif(const char *format, int *i, va_list list)
 
 void verif2(const char *format, int *i, va_list list)
 {
+    if (format[*i + 1] == '%')
+        my_putchar('%');
     if (format[*i + 1] == 'd' || format[*i + 1] == 'i')
         my_put_nbr(va_arg(list, int));
     if (format[*i + 1] == 'l' && format[*i + 2] == 'd') {
         my_put_long_int(va_arg(list, long int));
         *i += 1;
     }
-    if (format[*i + 1] == 'f' || format[*i + 1] == 'F')
-        my_put_float(va_arg(list, double));
     if (format[*i + 1] == 'L' && format[*i + 2] == 'f') {
         my_put_long_double(va_arg(list, long double));
         *i += 1;
@@ -190,4 +190,14 @@ int my_printf(const char *format, ...)
     }
     va_end(list);
     return cnb;
+}
+
+int main(void)
+{
+    my_printf("%lf\n", 3.14159);
+    my_put_float(3.14159);
+    printf("\n");
+    printf("%lf\n", 3.14159);
+    my_printf("%+lf\n", 3.14159);
+    my_printf("%f\n", 3.14159);
 }
