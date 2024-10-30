@@ -85,6 +85,27 @@ Test(my_is_prime, test_is_prime) {
     cr_assert_eq(my_is_prime(29), 1);
 }
 
+Test(my_put_nbr, test_put_nbr_positive, .init = redirect_all_stdout) {
+    my_put_nbr(12345);
+    cr_assert_stdout_eq_str("12345");
+}
+
+Test(my_put_nbr, test_put_nbr_negative, .init = redirect_all_stdout) {
+    my_put_nbr(-12345);
+    cr_assert_stdout_eq_str("-12345");
+}
+
+Test(my_put_nbr, test_put_nbr_min, .init = redirect_all_stdout) {
+    my_put_nbr(-2147483648);
+    cr_assert_stdout_eq_str("-2147483648");
+}
+
+Test(my_put_nbr, test_put_nbr_single_digit, .init = redirect_all_stdout) {
+    my_put_nbr(7);
+    cr_assert_stdout_eq_str("7");
+}
+
+
 Test(my_getnbr, test_getnbr) {
     cr_assert_eq(my_getnbr("123"), 123);
     cr_assert_eq(my_getnbr("-123"), -123);
@@ -116,9 +137,24 @@ Test(my_put_long_double, test_put_long_double, .init = redirect_all_stdout) {
     cr_assert_stdout_eq_str("3.141590");
 }
 
-Test(my_put_long_int, test_put_long_int, .init = redirect_all_stdout) {
+Test(my_put_long_int, test_put_long_int_positive, .init = redirect_all_stdout) {
     my_put_long_int(1234567890);
     cr_assert_stdout_eq_str("1234567890");
+}
+
+Test(my_put_long_int, test_put_long_int_negative, .init = redirect_all_stdout) {
+    my_put_long_int(-1234567890);
+    cr_assert_stdout_eq_str("-1234567890");
+}
+
+Test(my_put_long_int, test_put_long_int_min, .init = redirect_all_stdout) {
+    my_put_long_int(-2147483648L);
+    cr_assert_stdout_eq_str("-2147483648");
+}
+
+Test(my_put_long_int, test_put_long_int_single_digit, .init = redirect_all_stdout) {
+    my_put_long_int(5);
+    cr_assert_stdout_eq_str("5");
 }
 
 Test(my_put_scientific, test_put_scientific, .init = redirect_all_stdout) {
