@@ -19,6 +19,8 @@ $(NAME):	$(OBJ)
 
 tests_run:
 	gcc *.c tests/unit_test.c --coverage -lcriterion -o $(NAME2) -L. -lmy
+	./$(NAME2)
+	gcovr --exclude tests/
 
 clean:
 	rm -f $(OBJ)
