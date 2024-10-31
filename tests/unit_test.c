@@ -314,6 +314,30 @@ Test(my_strncpy, test_strncpy) {
     cr_assert_str_eq(dest, "Hello, world!");
 }
 
+Test(my_strncpy, test_short_src) {
+    char dest[50];
+    my_strncpy(dest, "Hello", 10);
+    cr_assert_str_eq(dest, "Hello");
+    for (int i = 5; i < 10; i++) {
+        cr_assert_eq(dest[i], '\0');
+    }
+}
+
+Test(my_strncpy, test_empty_src) {
+    char dest[50];
+    my_strncpy(dest, "", 5);
+    cr_assert_str_empty(dest);
+    for (int i = 0; i < 5; i++) {
+        cr_assert_eq(dest[i], '\0');
+    }
+}
+
+Test(my_strncpy, test_zero_n) {
+    char dest[50] = "Initial content";
+    my_strncpy(dest, "Hello", 0);
+    cr_assert_str_eq(dest, "Initial content");
+}
+
 Test(my_strupcase, test_strupcase) {
     char str[] = "Hello, World!";
     my_strupcase(str);
