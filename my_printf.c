@@ -124,7 +124,8 @@ void static plus_flag(const char *format, int *i, va_list list)
         is_plus = 1;
         *i += 1;
     }
-    if (format[*i + 1] == 'd' || format[*i + 1] == 'i')
+    if (format[*i - 1] == '+' && format[*i + 1] == 'i' ||
+    format[*i + 1] == '+' && format[*i + 1] == 'd')
         handle_int(format, i, is_plus, list);
     handle_double(format, i, is_plus, list);
     handle_long_double(format, i, is_plus, list);
