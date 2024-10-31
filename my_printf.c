@@ -95,27 +95,6 @@ void static verif4(const char *format, int *i, int *cnb, va_list list)
     }
 }
 
-void static verif5(const char *format, int *i, int *cnb, va_list list)
-{
-    int len = my_strlen(va_arg(list, char *));
-    int *nbr;
-
-    while (format[*i + 1] >= '0' && format[*i + 1] <= '9') {
-        *nbr = (*nbr * 10) + (format[*i + 1] - '0');
-        *nbr = *cnb;
-        if (format[*i + 2] == 's') {
-            my_space_width(*nbr, len);
-            my_putstr(va_arg(list, char *));
-            i += 2;
-        }
-        if (format[*i + 2] == 'd' || format[*i + 2] == 'i') {
-            my_space_width(*nbr, va_arg(list, int));
-            my_put_nbr(va_arg(list, int));
-            i += 2;
-        }
-    }
-}
-
 void static plus_flag(const char *format, int *i, va_list list)
 {
     if (format[*i + 1] == '+' && format[*i + 2] == 'd') {
@@ -176,11 +155,13 @@ int my_printf(const char *format, ...)
     va_list list;
     int i = 0;
     int cnb = 0;
+    int nbr;
 
     va_start(list, format);
     while (format[i] != '\0') {
         if (format[i] == '%') {
             group(format, &i, &cnb, list);
+            flag_numb(format, &i, nbr, list);
             i++;
         } else {
             my_putchar(format[i]);

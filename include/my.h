@@ -84,5 +84,6 @@ void my_space_width(int nb, int value);
 int my_put_g_normalize(double *nb);
 void normalize2(double *nb, int *exponent);
 void my_put_g_sign(double *nb);
+void flag_numb(const char *format, int *i, int nbr, va_list lis);
 
 #endif
