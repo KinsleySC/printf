@@ -33,18 +33,27 @@ Test(my_printf, pointer_specifier, .init = redirect_all_stdout) {
     my_printf("%p", &a);
 }
 
-Test(my_printf, octal_specifier, .init = redirect_all_stdout) {
-    my_printf("%o", 64);
-    cr_assert_stdout_eq_str("100");
+Test(my_octal, test_octal_conversion) {
+    cr_assert_eq(my_octal(0), 0, "Expected octal for 0 is 0");
+    cr_assert_eq(my_octal(1), 1, "Expected octal for 1 is 1");
+    cr_assert_eq(my_octal(7), 7, "Expected octal for 7 is 7");
+    cr_assert_eq(my_octal(8), 10, "Expected octal for 8 is 10");
+    cr_assert_eq(my_octal(9), 11, "Expected octal for 9 is 11");
+    cr_assert_eq(my_octal(15), 17, "Expected octal for 15 is 17");
+    cr_assert_eq(my_octal(64), 100, "Expected octal for 64 is 100");
+    cr_assert_eq(my_octal(100), 144, "Expected octal for 100 is 144");
+    cr_assert_eq(my_octal(255), 377, "Expected octal for 255 is 377");
+    cr_assert_eq(my_octal(512), 1000, "Expected octal for 512 is 1000");
 }
+
 
 Test(my_printf, decimal_specifiers, .init = redirect_all_stdout) {
     my_printf("%d %i", 123, -456);
     cr_assert_stdout_eq_str("123 -456");
 }
 
-Test(my_printf, float_specifier, .init = redirect_all_stdout) {
-    my_printf("%f", 3.14159);
+Test(my_put_float, test_put_float, .init = redirect_all_stdout) {
+    my_put_float(3.14159);
     cr_assert_stdout_eq_str("3.141590");
 }
 
@@ -60,6 +69,13 @@ Test(my_compute_power_rec, test_power) {
     cr_assert_eq(my_compute_power_rec(10, 0), 1);
 }
 
+Test(my_compute_power_rec, test_power_negative) {
+    cr_assert_eq(my_compute_power_rec(2, -3), 0);
+    cr_assert_eq(my_compute_power_rec(3, -3), 0);
+    cr_assert_eq(my_compute_power_rec(5, -2), 0);
+    cr_assert_eq(my_compute_power_rec(10, -1), 0);
+}
+
 Test(my_compute_square_root, test_square_root) {
     cr_assert_eq(my_compute_square_root(4), 2);
     cr_assert_eq(my_compute_square_root(9), 3);
@@ -67,11 +83,26 @@ Test(my_compute_square_root, test_square_root) {
     cr_assert_eq(my_compute_square_root(25), 5);
 }
 
+Test(my_compute_square_root, test_square_root_2) {
+    cr_assert_eq(my_compute_square_root(0), 0);
+    cr_assert_eq(my_compute_square_root(1), 1);
+    cr_assert_eq(my_compute_square_root(2), 0);
+    cr_assert_eq(my_compute_square_root(3), 0);
+    cr_assert_eq(my_compute_square_root(5), 0);
+}
+
 Test(my_find_prime_sup, test_prime_sup) {
     cr_assert_eq(my_find_prime_sup(4), 5);
     cr_assert_eq(my_find_prime_sup(9), 11);
     cr_assert_eq(my_find_prime_sup(16), 17);
     cr_assert_eq(my_find_prime_sup(25), 29);
+}
+
+Test(my_find_prime_sup, test_prime_sup_negative) {
+    cr_assert_eq(my_find_prime_sup(0), 2);
+    cr_assert_eq(my_find_prime_sup(1), 2);
+    cr_assert_eq(my_find_prime_sup(2), 2);
+    cr_assert_eq(my_find_prime_sup(3), 3);
 }
 
 Test(my_is_prime, test_is_prime) {
@@ -83,6 +114,13 @@ Test(my_is_prime, test_is_prime) {
     cr_assert_eq(my_is_prime(11), 1);
     cr_assert_eq(my_is_prime(17), 1);
     cr_assert_eq(my_is_prime(29), 1);
+}
+
+Test(my_is_prime, test_is_prime_2) {
+    cr_assert_eq(my_is_prime(0), 0);
+    cr_assert_eq(my_is_prime(1), 0);
+    cr_assert_eq(my_is_prime(2), 1);
+    cr_assert_eq(my_is_prime(3), 1);
 }
 
 Test(my_put_nbr, test_put_nbr_positive, .init = redirect_all_stdout) {
@@ -112,6 +150,17 @@ Test(my_getnbr, test_getnbr) {
     cr_assert_eq(my_getnbr("0"), 0);
     cr_assert_eq(my_getnbr("2147483647"), 2147483647);
     cr_assert_eq(my_getnbr("-2147483648"), -2147483648);
+}
+
+Test(my_getnbr, test_getnbr_2) {
+    cr_assert_eq(my_getnbr("1234567890"), 1234567890, "Expected 1234567890");
+    cr_assert_eq(my_getnbr("-1234567890"), -1234567890, "Expected -1234567890");
+    cr_assert_eq(my_getnbr("12345678901234567890"), 0, "Expected overflow for large positive number");
+    cr_assert_eq(my_getnbr("-12345678901234567890"), 0, "Expected overflow for large negative number");
+    cr_assert_eq(my_getnbr("2147483647"), 2147483647, "Expected 2147483647");
+    cr_assert_eq(my_getnbr("-2147483648"), -2147483648, "Expected -2147483648");
+    cr_assert_eq(my_getnbr("2147483648"), 0, "Expected overflow for value just above INT_MAX");
+    cr_assert_eq(my_getnbr("-2147483649"), 0, "Expected overflow for value just below INT_MIN");
 }
 
 Test(my_isneg, test_positive, .init = redirect_all_stdout)
@@ -162,9 +211,29 @@ Test(my_put_scientific, test_put_scientific, .init = redirect_all_stdout) {
     cr_assert_stdout_eq_str("3.141590e+00");
 }
 
+Test(my_put_scientific, test_put_scientific_2, .init = redirect_all_stdout) {
+    my_put_scientific(0.0);
+    cr_assert_stdout_eq_str("0.000000e+00");
+}
+
+Test(my_put_scientific, test_put_scientific_3, .init = redirect_all_stdout) {
+    my_put_scientific(-32958);
+    cr_assert_stdout_eq_str("-3.295800e+04");
+}
+
 Test(my_put_scientific_cap, test_put_scientific_cap, .init = redirect_all_stdout) {
     my_put_scientific_cap(3.14159);
     cr_assert_stdout_eq_str("3.141590E+00");
+}
+
+Test(my_put_scientific, test_put_scientific_cap_2, .init = redirect_all_stdout) {
+    my_put_scientific_cap(0.0);
+    cr_assert_stdout_eq_str("0.000000E+00");
+}
+
+Test(my_put_scientific, test_put_scientific_cap_3, .init = redirect_all_stdout) {
+    my_put_scientific_cap(-32958);
+    cr_assert_stdout_eq_str("-3.295800E+04");
 }
 
 Test(my_revstr, test_revstr) {
@@ -202,6 +271,10 @@ Test(my_str_isalpha, test_str_isalpha) {
     cr_assert_eq(my_str_isalpha("Hello, world!"), 0);
     cr_assert_eq(my_str_isalpha("Hello"), 1);
     cr_assert_eq(my_str_isalpha("world"), 1);
+}
+
+Test(my_str_isalpha, test_str_isalpha2) {
+    cr_assert_eq(my_str_isalpha(""), 1);
 }
 
 Test(my_str_islower, test_str_islower) {

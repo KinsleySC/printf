@@ -12,21 +12,20 @@ int my_octal(int nb)
     int total = 0;
     int div = nb / 8;
     int rest = nb % 8;
-    int base = 10;
+    int base = 1;
 
     if (nb <= 7) {
-        my_put_nbr(nb);
-        return 0;
+        return nb;
     }
-    nb = nb / 8;
     total = rest;
-    while (div != 0) {
-        div = nb / 8;
+    nb = div;
+    base = 10;
+    while (nb != 0) {
         rest = nb % 8;
-        nb = nb / 8;
         total += (rest * base);
-        base = base * 10;
+        nb = nb / 8;
+        base *= 10;
     }
     my_put_nbr(total);
-    return 0;
+    return total;
 }

@@ -25,10 +25,13 @@ int my_isneg(int nb);
 int my_put_nbr(int nb);
 void my_put_float(double nb);
 void my_put_long_double(long double nb);
+void leading_zeros(int fractional_part_as_int);
 void my_put_long_int(long int nb);
 int my_put_hexa(unsigned long nb);
 int my_put_hexa_mini(unsigned long nb);
 void my_put_pointer(void *ptr);
+void my_put_g(double nb);
+void my_put_g_cap(double nb);
 void my_put_scientific(double nb);
 void my_put_scientific_cap(double nb);
 void print_fraction_part(double fraction_part);
@@ -78,5 +81,8 @@ void handle_long_int(const char *format, int *i, va_list list);
 void handle_float(const char *format, int *i, va_list list);
 void handle_scientific(const char *format, int *i, va_list list);
 void my_space_width(int nb, int value);
+int my_put_g_normalize(double *nb);
+void normalize2(double *nb, int *exponent);
+void my_put_g_sign(double *nb);
 
 #endif

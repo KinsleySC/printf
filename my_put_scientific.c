@@ -55,6 +55,11 @@ void case_zero(double nb)
         my_putchar('0');
         my_putchar('.');
         my_put_nbr(0);
+        my_put_nbr(0);
+        my_put_nbr(0);
+        my_put_nbr(0);
+        my_put_nbr(0);
+        my_put_nbr(0);
         my_putchar('e');
         my_putchar('+');
         my_putchar('0');
