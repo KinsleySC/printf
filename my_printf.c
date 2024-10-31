@@ -118,47 +118,17 @@ void static verif5(const char *format, int *i, int *cnb, va_list list)
 
 void static plus_flag(const char *format, int *i, va_list list)
 {
-    if (format[*i + 1] == '+' && format[*i + 2] == 'd') {
-        my_putchar('+');
-        my_put_nbr(va_arg(list, int));
-        *i += 1;
-    }
-    if (format[*i + 1] == '+' && format[*i + 2] == 'i') {
-        my_putchar('+');
-        my_put_nbr(va_arg(list, int));
-        *i += 1;
-    }
-    if (format[*i + 1] == '+' && format[*i + 2] == 'f') {
-        my_putchar('+');
-        my_put_float(va_arg(list, double));
-        *i += 1;
-    }
-    if (format[*i + 1] == '+' && format[*i + 2] == 'e') {
-        my_putchar('+');
-        my_put_scientific(va_arg(list, double));
-        *i += 1;
-    }
-}
+    int is_plus = 0;
 
-void static plus_flag2(const char *format, int *i, va_list list)
-{
-    if (format[*i + 1] == '+' &&
-    format[*i + 2] == 'l' && format[*i + 3] == 'd') {
-        my_putchar('+');
-        my_put_long_int(va_arg(list, long int));
-        *i += 2;
-    }
-    if (format[*i + 1] == '+' &&
-    format[*i + 2] == 'l' && format[*i + 3] == 'f') {
-        my_putchar('+');
-        my_put_float(va_arg(list, double));
-        *i += 2;
-    }
-    if (format[*i + 1] == '+' && format[*i + 2] == 'E') {
-        my_putchar('+');
-        my_put_scientific_cap(va_arg(list, double));
+    if (format[*i + 1] == '+') {
+        is_plus = 1;
         *i += 1;
     }
+    handle_int(format, i, is_plus, list);
+    handle_double(format, i, is_plus, list);
+    handle_long_double(format, i, is_plus, list);
+    handle_long_int(format, i, is_plus, list);
+    handle_scientific(format, i, is_plus, list);
 }
 
 void static group(const char *format, int *i, int *cnb, va_list list)
@@ -168,7 +138,6 @@ void static group(const char *format, int *i, int *cnb, va_list list)
     verif3_h(format, i, list);
     verif4(format, i, cnb, list);
     plus_flag(format, i, list);
-    plus_flag2(format, i, list);
 }
 
 int my_printf(const char *format, ...)

@@ -73,13 +73,13 @@ int mini_printf(const char *format, ...);
 int my_octal(int nb);
 int my_printf(const char *format, ...);
 void my_unsigned_int(unsigned int nb);
-void handle_plus_flag(const char *format, int *i, int *plus_flag);
-void handle_int(const char *format, int *i, va_list list);
-void handle_double(const char *format, int *i, va_list list);
-void handle_long_double(const char *format, int *i, va_list list);
-void handle_long_int(const char *format, int *i, va_list list);
-void handle_float(const char *format, int *i, va_list list);
-void handle_scientific(const char *format, int *i, va_list list);
+void handle_int(const char *format, int *i, int is_plus, va_list list);
+void handle_long_double(const char *format, int *i,
+    int plus_flag, va_list list);
+void handle_long_int(const char *format, int *i, int plus_flag, va_list list);
+void handle_double(const char *format, int *i, int plus_flag, va_list list);
+void handle_scientific(const char *format, int *i,
+    int plus_flag, va_list list);
 void my_space_width(int nb, int value);
 int my_put_g_normalize(double *nb);
 void normalize2(double *nb, int *exponent);
