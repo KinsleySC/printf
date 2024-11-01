@@ -156,10 +156,16 @@ Test(my_printf, hash_m_specifier, .init = redirect_all_stdout) {
     cr_assert_stdout_eq_str("0");
 }
 
-Test(my_printf, n_specifier, .init = redirect_all_stdout) {
+Test(my_printf, n_specifier_value, .init = redirect_all_stdout) {
     int a;
     my_printf("%n", &a);
-    cr_assert_stdout_eq_str("");
+    cr_assert_eq(a, 0);
+}
+
+Test(my_printf, n_specifier_in_midle_value, .init = redirect_all_stdout) {
+    int a;
+    my_printf("Hello %n World!", &a);
+    cr_assert_eq(a, 6);
 }
 
 Test(my_compute_power_rec, test_power) {

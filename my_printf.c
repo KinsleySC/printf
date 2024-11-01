@@ -62,15 +62,15 @@ void static verif4(const char *format, int *i, int *cnb, va_list list)
 {
     int *stock;
 
+    if (format[*i + 1] == 'n') {
+        stock = va_arg(list, int *);
+        *stock = *cnb;
+    }
     if (format[*i + 1] == '#' && format[*i + 2] == 'm') {
         my_putchar('0');
         *i += 1;
     } else if (format[*i + 1] == 'm') {
         my_putstr("Success");
-    }
-    if (format[*i + 1] == 'n') {
-        stock = va_arg(list, int *);
-        *stock = *cnb;
     }
     if (format[*i + 1] == '#') {
         if (format[*i + 2] == 'd' || format[*i + 2] == 'i') {
