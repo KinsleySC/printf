@@ -15,6 +15,7 @@ int my_octal(int nb)
     int base = 1;
 
     if (nb <= 7) {
+        my_put_nbr(nb);
         return nb;
     }
     total = rest;

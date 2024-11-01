@@ -50,14 +50,18 @@ void handle_double(const char *format, int *i, int plus_flag, va_list list)
 {
     double number;
 
-    if (format[*i + 1] == 'f' || format[*i + 1] == 'F' ||
-        (format[*i + 1] == 'l' && format[*i + 2] == 'f')) {
+    if (format[*i + 1] == 'f' || format[*i + 1] == 'F') {
         number = va_arg(list, double);
         if (plus_flag && number >= 0)
             my_putchar('+');
         my_put_float(number);
-        if (format[*i + 1] == 'l' && format[*i + 2] == 'f')
-            *i += 1;
+    }
+    if (format[*i + 1] == 'l' && format[*i + 2] == 'f') {
+        number = va_arg(list, double);
+        if (plus_flag && number >= 0)
+            my_putchar('+');
+        my_put_float(number);
+        *i += 1;
     }
 }
 

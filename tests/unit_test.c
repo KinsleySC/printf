@@ -13,6 +13,13 @@ void redirect_all_stdout(void) {
     cr_redirect_stdout();
 }
 
+//test no %
+
+Test(my_printf, no_specifier, .init = redirect_all_stdout) {
+    my_printf("Hello, world!");
+    cr_assert_stdout_eq_str("Hello, world!");
+}
+
 Test(my_printf, string_specifier, .init = redirect_all_stdout) {
     my_printf("%s", "Hello, world!");
     cr_assert_stdout_eq_str("Hello, world!");
@@ -33,23 +40,100 @@ Test(my_printf, pointer_specifier, .init = redirect_all_stdout) {
     my_printf("%p", &a);
 }
 
-Test(my_octal, test_octal_conversion) {
-    cr_assert_eq(my_octal(0), 0, "Expected octal for 0 is 0");
-    cr_assert_eq(my_octal(1), 1, "Expected octal for 1 is 1");
-    cr_assert_eq(my_octal(7), 7, "Expected octal for 7 is 7");
-    cr_assert_eq(my_octal(8), 10, "Expected octal for 8 is 10");
-    cr_assert_eq(my_octal(9), 11, "Expected octal for 9 is 11");
-    cr_assert_eq(my_octal(15), 17, "Expected octal for 15 is 17");
-    cr_assert_eq(my_octal(64), 100, "Expected octal for 64 is 100");
-    cr_assert_eq(my_octal(100), 144, "Expected octal for 100 is 144");
-    cr_assert_eq(my_octal(255), 377, "Expected octal for 255 is 377");
-    cr_assert_eq(my_octal(512), 1000, "Expected octal for 512 is 1000");
+Test(my_printf, octal_specifier_6, .init = redirect_all_stdout) {
+    my_printf("%o", 6);
+    cr_assert_stdout_eq_str("6");
 }
 
+Test(my_printf, octal_specifier_10, .init = redirect_all_stdout) {
+    my_printf("%o", 10);
+    cr_assert_stdout_eq_str("12");
+}
+
+Test(my_printf, octal_specifier_64, .init = redirect_all_stdout) {
+    my_printf("%o", 64);
+    cr_assert_stdout_eq_str("100");
+}
+
+Test(my_printf, percent_specifier, .init = redirect_all_stdout) {
+    my_printf("%%");
+    cr_assert_stdout_eq_str("%");
+}
+
+Test(my_printf, unsigned_specifier, .init = redirect_all_stdout) {
+    my_printf("%u", 123);
+    cr_assert_stdout_eq_str("123");
+}
 
 Test(my_printf, decimal_specifiers, .init = redirect_all_stdout) {
     my_printf("%d %i", 123, -456);
     cr_assert_stdout_eq_str("123 -456");
+}
+
+Test(my_printf, plus_flag, .init = redirect_all_stdout) {
+    my_printf("%+d %+i", 123, -456);
+    cr_assert_stdout_eq_str("+123 -456");
+}
+
+Test(my_printf, long_double, .init = redirect_all_stdout) {
+    long double Lf = 3.14159;
+    my_printf("%Lf", Lf);
+    cr_assert_stdout_eq_str("3.141590");
+}
+
+Test(my_printf, long_double2, .init = redirect_all_stdout) {
+    long double Lf = 3.14159;
+    my_printf("%+Lf", Lf);
+    cr_assert_stdout_eq_str("+3.141590");
+}
+
+Test(my_printf, long_int, .init = redirect_all_stdout) {
+    long int ld = 1234567890;
+    my_printf("%ld", ld);
+    cr_assert_stdout_eq_str("1234567890");
+}
+
+Test(my_printf, long_int2, .init = redirect_all_stdout) {
+    long int ld = 1234567890;
+    my_printf("%+ld", ld);
+    cr_assert_stdout_eq_str("+1234567890");
+}
+
+Test(my_printf, double, .init = redirect_all_stdout) {
+    double f = 3.14159;
+    my_printf("%+f", f);
+    cr_assert_stdout_eq_str("+3.141590");
+}
+
+Test(my_printf, double2, .init = redirect_all_stdout) {
+    double lf = 3.14159;
+    my_printf("%lf", lf);
+    cr_assert_stdout_eq_str("3.141590");
+}
+
+Test(my_printf, double3, .init = redirect_all_stdout) {
+    double lf = 3.14159;
+    my_printf("%+lf", lf);
+    cr_assert_stdout_eq_str("+3.141590");
+}
+
+Test(my_printf, scientific, .init = redirect_all_stdout) {
+    double f = 3.14159;
+    my_printf("%+e", f);
+    cr_assert_stdout_eq_str("+3.141590e+00");
+}
+
+Test(my_printf, scientific2, .init = redirect_all_stdout) {
+    double f = 3.14159;
+    my_printf("%+E", f);
+    cr_assert_stdout_eq_str("+3.141590E+00");
+}
+
+//test %#x %#X %#o
+
+Test(my_printf, hash_specifiers, .init = redirect_all_stdout) {
+    my_printf("%#x %#X %#o", 255, 255, 8);
+    cr_assert_stdout_eq_str("0xff 0XFF 010");
 }
 
 Test(my_put_float, test_put_float, .init = redirect_all_stdout) {
@@ -57,9 +141,27 @@ Test(my_put_float, test_put_float, .init = redirect_all_stdout) {
     cr_assert_stdout_eq_str("3.141590");
 }
 
-Test(my_printf, hash_specifiers, .init = redirect_all_stdout) {
-    my_printf("%#x %#X %#o", 255, 255, 8);
-    cr_assert_stdout_eq_str("0xff 0XFF 010");
+Test(my_put_float, test_put_float_negative, .init = redirect_all_stdout) {
+    my_put_float(-3.14159);
+    cr_assert_stdout_eq_str("-3.141590");
+}
+
+Test(my_printf, m_specifier, .init = redirect_all_stdout) {
+    my_printf("%m");
+    cr_assert_stdout_eq_str("Success");
+}
+
+//test %#m
+
+Test(my_printf, hash_m_specifier, .init = redirect_all_stdout) {
+    my_printf("%#m");
+    cr_assert_stdout_eq_str("0");
+}
+
+Test(my_printf, n_specifier, .init = redirect_all_stdout) {
+    int a;
+    my_printf("%n", &a);
+    cr_assert_stdout_eq_str("");
 }
 
 Test(my_compute_power_rec, test_power) {
@@ -184,6 +286,11 @@ Test(my_isneg, test_zero, .init = redirect_all_stdout)
 Test(my_put_long_double, test_put_long_double, .init = redirect_all_stdout) {
     my_put_long_double(3.14159);
     cr_assert_stdout_eq_str("3.141590");
+}
+
+Test(my_put_long_double, test_put_long_double_negative, .init = redirect_all_stdout) {
+    my_put_long_double(-3.14159);
+    cr_assert_stdout_eq_str("-3.141590");
 }
 
 Test(my_put_long_int, test_put_long_int_positive, .init = redirect_all_stdout) {
