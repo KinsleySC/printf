@@ -468,7 +468,32 @@ Test(my_str_isupper, test_str_isupper) {
     cr_assert_eq(my_str_isupper("WORLD"), 1);
 }
 
-Test(my_space_width, test_space_width, .init = redirect_all_stdout) {
-    my_space_width(10, 5);
+Test(my_put_width, test_put_width_spaces, .init = redirect_all_stdout) {
+    my_put_width(' ', 10, 5);
     cr_assert_stdout_eq_str("     ");
+}
+
+Test(my_put_width, test_put_width_zeros, .init = redirect_all_stdout) {
+    my_put_width('0', 8, 3);
+    cr_assert_stdout_eq_str("00000");
+}
+
+Test(my_int_len, test_int_len_positives) {
+    int len = my_int_len(12345);
+    cr_assert_eq(len, 5, "Expected length of 12345 to be 5 but got %d", len);
+}
+
+Test(my_int_len, test_int_len_zero) {
+    int len = my_int_len(0);
+    cr_assert_eq(len, 1, "Expected length of 0 to be 1 but got %d", len);
+}
+
+Test(my_int_len, test_int_len_negatives) {
+    int len = my_int_len(-456);
+    cr_assert_eq(len, 4, "Expected length of -456 to be 4 but got %d", len);
+}
+
+Test(my_int_len, test_int_len_large) {
+    int len = my_int_len(1234567890);
+    cr_assert_eq(len, 10, "Expected length of 1234567890 to be 10 but got %d", len);
 }
