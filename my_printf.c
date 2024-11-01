@@ -58,7 +58,7 @@ void verif3_h(const char *format, int *i, va_list list)
     }
 }
 
-void static verif4(const char *format, int *i, int *char_c, va_list list)
+void static verif4(const char *format, int *i, int *cnb, va_list list)
 {
     int *stock;
 
@@ -70,7 +70,7 @@ void static verif4(const char *format, int *i, int *char_c, va_list list)
     }
     if (format[*i + 1] == 'n') {
         stock = va_arg(list, int *);
-        *char_c = *stock;
+        *stock = *cnb;
     }
     if (format[*i + 1] == '#') {
         if (format[*i + 2] == 'd' || format[*i + 2] == 'i') {
