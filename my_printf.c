@@ -92,7 +92,6 @@ int my_printf(const char *format, ...)
     va_list list;
     int i = 0;
     int cnb = 0;
-    int nbr;
 
     va_start(list, format);
     while (format[i] != '\0') {
