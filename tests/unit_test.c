@@ -13,8 +13,6 @@ void redirect_all_stdout(void) {
     cr_redirect_stdout();
 }
 
-//test no %
-
 Test(my_printf, no_specifier, .init = redirect_all_stdout) {
     my_printf("Hello, world!");
     cr_assert_stdout_eq_str("Hello, world!");
