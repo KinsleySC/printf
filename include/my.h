@@ -80,11 +80,12 @@ void handle_long_int(const char *format, int *i, int plus_flag, va_list list);
 void handle_double(const char *format, int *i, int plus_flag, va_list list);
 void handle_scientific(const char *format, int *i,
     int plus_flag, va_list list);
-void my_space_width(int nb, int value);
+int my_put_width(char c, int nb, int value);
 int my_put_g_normalize(double *nb);
 void normalize2(double *nb, int *exponent);
 void my_put_g_sign(double *nb);
-void flag_numb(const char *format, int *i, int nbr, va_list lis);
+void flag_numb(const char *format, char choose, int *i, va_list lis);
+int my_int_len(int nb);
 void handle_plus_flag(const char *format, int *i, int *plus_flag);
 
 #endif
